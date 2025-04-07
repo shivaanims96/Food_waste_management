@@ -82,7 +82,7 @@ def main():
                     st.dataframe(providers_df)
             
             elif selected_query == query_options[1]:
-                query = "SELECT Provider_Type, SUM(Quantity) AS Total_Quantity_Contributed FROM food_listings_data GROUP BY Provider_Type ORDER BY Total_Quantity_Contributed DESC LIMIT 1;"
+                query = "SELECT Provider_Type, SUM(Quantity) AS Total_Quantity_Contributed FROM food_listings GROUP BY Provider_Type ORDER BY Total_Quantity_Contributed DESC LIMIT 1;"
                 df = execute_query(conn, query)
                 if df is not None:
                     st.dataframe(df)
@@ -95,25 +95,25 @@ def main():
                     st.dataframe(df)
 
             elif selected_query == query_options[4]:
-                query = "SELECT SUM(Quantity) AS Total_Quantity FROM food_listings_data;"
+                query = "SELECT SUM(Quantity) AS Total_Quantity FROM food_listings;"
                 df = execute_query(conn, query)
                 if df is not None:
                     st.dataframe(df)
 
             elif selected_query == query_options[5]:
-                query = "SELECT Location, COUNT(Food_ID) AS Listing_Count FROM food_listings_data GROUP BY Location ORDER BY Listing_Count DESC LIMIT 1;"
+                query = "SELECT Location, COUNT(Food_ID) AS Listing_Count FROM food_listings GROUP BY Location ORDER BY Listing_Count DESC LIMIT 1;"
                 df = execute_query(conn, query)
                 if df is not None:
                     st.dataframe(df)
 
             elif selected_query == query_options[6]:
-                query = "SELECT Food_Type, COUNT(Food_ID) AS Food_Type_Count FROM food_listings_data GROUP BY Food_Type ORDER BY Food_Type_Count DESC;"
+                query = "SELECT Food_Type, COUNT(Food_ID) AS Food_Type_Count FROM food_listings GROUP BY Food_Type ORDER BY Food_Type_Count DESC;"
                 df = execute_query(conn, query)
                 if df is not None:
                     st.dataframe(df)
 
             elif selected_query == query_options[7]:
-                query = "SELECT * FROM food_listings_data WHERE Expiry_Date between DATE('2024-04-03', '-1 month') and Date('now');"
+                query = "SELECT * FROM food_listings WHERE Expiry_Date between DATE('2024-04-03', '-1 month') and Date('now');"
                 df = execute_query(conn, query)
                 if df is not None:
                     st.dataframe(df)
@@ -125,13 +125,13 @@ def main():
                     st.dataframe(df)
 
             elif selected_query == query_options[9]:
-                query = "SELECT p.Name, COUNT(c.Claim_ID) AS Successful_Claim_Count FROM Claims c JOIN Food_Listings_data fl ON c.Food_ID = fl.Food_ID JOIN Providers p ON fl.Provider_ID = p.Provider_ID WHERE c.Status = 'Completed' GROUP BY p.Provider_ID ORDER BY Successful_Claim_Count DESC LIMIT 1;"
+                query = "SELECT p.Name, COUNT(c.Claim_ID) AS Successful_Claim_Count FROM Claims c JOIN food_listings fl ON c.Food_ID = fl.Food_ID JOIN Providers p ON fl.Provider_ID = p.Provider_ID WHERE c.Status = 'Completed' GROUP BY p.Provider_ID ORDER BY Successful_Claim_Count DESC LIMIT 1;"
                 df = execute_query(conn, query)
                 if df is not None:
                     st.dataframe(df)
 
             elif selected_query == query_options[10]:
-                query = "SELECT fl.Location, AVG(JULIANDAY(c.Timestamp) - JULIANDAY(fl.Expiry_Date)) AS Average_Claim_Time FROM Claims c JOIN Food_Listings_data fl ON c.Food_ID = fl.Food_ID GROUP BY fl.Location ORDER BY Average_Claim_Time ASC;"
+                query = "SELECT fl.Location, AVG(JULIANDAY(c.Timestamp) - JULIANDAY(fl.Expiry_Date)) AS Average_Claim_Time FROM Claims c JOIN food_listings fl ON c.Food_ID = fl.Food_ID GROUP BY fl.Location ORDER BY Average_Claim_Time ASC;"
                 df = execute_query(conn, query)
                 if df is not None:
                     st.dataframe(df)
@@ -143,19 +143,19 @@ def main():
                     st.dataframe(df)
 
             elif selected_query == query_options[12]:
-                query = "SELECT AVG(fl.Quantity) AS Average_Quantity_Claimed FROM Food_Listings_data fl JOIN Claims c ON fl.Food_ID = c.Food_ID;"
+                query = "SELECT AVG(fl.Quantity) AS Average_Quantity_Claimed FROM food_listings fl JOIN Claims c ON fl.Food_ID = c.Food_ID;"
                 df = execute_query(conn, query)
                 if df is not None:
                     st.dataframe(df)
 
             elif selected_query == query_options[13]:
-                query = "SELECT Meal_Type, COUNT(c.Claim_ID) AS Claim_Count FROM Claims c JOIN Food_Listings_data fl ON c.Food_ID = fl.Food_ID GROUP BY Meal_Type ORDER BY Claim_Count DESC LIMIT 1;"
+                query = "SELECT Meal_Type, COUNT(c.Claim_ID) AS Claim_Count FROM Claims c JOIN food_listings fl ON c.Food_ID = fl.Food_ID GROUP BY Meal_Type ORDER BY Claim_Count DESC LIMIT 1;"
                 df = execute_query(conn, query)
                 if df is not None:
                     st.dataframe(df)
 
             elif selected_query == query_options[14]:
-                query = "SELECT p.Name, SUM(fl.Quantity) AS Total_Quantity_Donated FROM Food_Listings_data fl JOIN Providers p ON fl.Provider_ID = p.Provider_ID GROUP BY p.Provider_ID;"
+                query = "SELECT p.Name, SUM(fl.Quantity) AS Total_Quantity_Donated FROM food_listings fl JOIN Providers p ON fl.Provider_ID = p.Provider_ID GROUP BY p.Provider_ID;"
                 df = execute_query(conn, query)
                 if df is not None:
                     st.dataframe(df)
